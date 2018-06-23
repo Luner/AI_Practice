@@ -1,0 +1,28 @@
+import java.util.ArrayList;
+
+public class SingleVariableLinearRegression {
+	
+	private ArrayList<Point> data;
+	private ArrayList<Float> inputs;
+	private ArrayList<Float> outputs;
+	
+	private float Theta0;
+	private float Theta1;
+	
+	public SingleVariableLinearRegression(ArrayList<Point> data) {
+		
+		this.data = data;
+		
+		inputs = new ArrayList<Float>();
+		outputs = new ArrayList<Float>();
+		
+		for(Point point : data) {
+			inputs.add(point.getX());
+			outputs.add(point.getY());
+		}
+	}
+	
+	
+	
+	
+}

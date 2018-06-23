@@ -1,0 +1,9 @@
+import java.util.ArrayList;
+
+public class SingleVariableLinearRegression {
+	
+	ArrayList<Point> data;
+	ArrayList<Float> inputs;
+	ArrayList<Float> outputs
+	
+}

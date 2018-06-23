@@ -1,0 +1,36 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class Graph {
+
+	private JPanel panel;
+	private JButton b1;
+	private JLabel lab;
+	
+	public Graph() {
+		gui();
+	}
+	
+	public JPanel getPanel() {
+		return this.panel;
+	}
+	
+	public void gui() {
+		
+		
+		panel = new JPanel();
+		panel.setBackground(Color.LIGHT_GRAY);
+		
+		b1 = new JButton("Graph");
+		lab = new JLabel("Y");
+		
+		panel.add(b1);
+		panel.add(lab);
+		}
+	
+	
+	
+	
+	
+	
+}

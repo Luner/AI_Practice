@@ -1,0 +1,11 @@
+import javax.swing.JFrame;
+
+public class Window {
+
+	private JFrame f;
+	
+	public Window() {
+		f = new JFrame("Linear Regression Example"
+				+ "");
+	}
+}

@@ -1,0 +1,29 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class Window {
+
+	private JFrame window;
+	
+	public Window() {
+		initWindow();
+	}
+	
+	public Window(Graph graph) {
+		initWindow();
+		window.add(graph.getPanel());
+	}
+	
+	private void initWindow() {
+
+		window = new JFrame("Linear Regression Example");
+		window.setVisible(true);
+		window.setSize(800, 600);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	public static void main (String[] args) {
+		Graph g = new Graph("X","Y");
+		new Window(g);
+	}
+}

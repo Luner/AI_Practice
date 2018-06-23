@@ -1,0 +1,40 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class Graph {
+
+	private JFrame f;
+	private JPanel graph;
+	private JButton b1;
+	private JLabel lab;
+	
+	public Graph() {
+		gui();
+	}
+	
+	public void gui() {
+		
+		f = new JFrame("Linear Regression");
+		f.setVisible(true);
+		f.setSize(800, 600);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		graph = new JPanel();
+		graph.setBackground(Color.LIGHT_GRAY);
+		
+		b1 = new JButton("Graph");
+		lab = new JLabel("Y");
+		
+		graph.add(b1);
+		graph.add(lab);
+		f.add(graph);
+	}
+	
+	
+	
+	public static void main (String[] args) {
+		new Graph();
+	}
+	
+	
+}

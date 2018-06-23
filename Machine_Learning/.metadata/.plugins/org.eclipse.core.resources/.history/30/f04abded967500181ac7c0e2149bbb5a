@@ -1,0 +1,74 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+public class Graph extends JPanel{
+
+	private JPanel panel;
+	
+	private JLabel xAxisLabel;
+	private JLabel yAxisLabel;
+	
+	private JButton draw;
+	
+	private int dividerWidth;
+	private int dividerHeight;
+	
+	private ArrayList<Point> points;
+	
+	public Graph(String xAxisLabel, String yAxisLabel, ArrayList<Point> points) {
+	
+		
+		this.setBackground(Color.LIGHT_GRAY);
+		
+		//Axis Labels
+		this.xAxisLabel = new JLabel(xAxisLabel);
+		this.yAxisLabel = new JLabel(yAxisLabel);
+		
+		this.add(this.xAxisLabel);
+		this.add(this.yAxisLabel);
+	
+		this.dividerHeight = this.getHeight() / 10;
+		this.dividerWidth = this.getWidth() / 10;
+		
+		//Points
+		this.points = points;
+		
+		//Button
+		this.draw = new JButton("draw");
+		this.add(draw);
+		
+		this.draw.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					for(Point point : points) {
+						drawPoint(getGraphics(), point.getX(), point.getY());
+					}
+				}
+		});
+		
+	}
+	
+	
+	private void drawLine(Graphics g, float x1, float y1, float x2, float y2) {
+		g.drawLine(x1, y1, x2, y2);
+	}
+	
+	
+	private void drawPoint(Graphics g, float x, float y) {
+		g.fillOval((int) x, this.getHeight() - (int) y, 6, 6);
+		g.drawOval((int) x, this.getHeight() - (int) y, 6, 6);
+	}
+	
+	public JPanel getPanel() {
+		return this.panel;
+	}
+	
+	
+	
+	
+	
+	
+	
+}

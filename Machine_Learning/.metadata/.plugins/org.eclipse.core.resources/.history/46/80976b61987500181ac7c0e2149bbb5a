@@ -1,0 +1,5 @@
+
+public class SingleVariableLinearRegression {
+	ArrayList<Point> data;
+	
+}
