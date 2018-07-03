@@ -4,61 +4,74 @@ import java.util.ArrayList;
 
 public class Graph extends JPanel{
 
-	private JPanel panel;
 	
-	private JLabel xAxisLabel;
-	private JLabel yAxisLabel;
-	
-	private JButton draw;
-	
-	private int dividerWidth;
-	private int dividerHeight;
+
+	private SingleVariableLinearRegression regression;
 	
 	private ArrayList<Point> points;
+	private UI ui;
 	
-	public Graph(String xAxisLabel, String yAxisLabel, ArrayList<Point> points) {
-	
+	public Graph(ArrayList<Point> points) {
+		regression = new SingleVariableLinearRegression(points);
 		
 		this.setBackground(Color.LIGHT_GRAY);
+		this.setPreferredSize(new Dimension(800, 500));
 		
-		//Axis Labels
-		this.xAxisLabel = new JLabel(xAxisLabel);
-		this.yAxisLabel = new JLabel(yAxisLabel);
-		
-		this.add(this.xAxisLabel);
-		this.add(this.yAxisLabel);
 	
-		this.dividerHeight = this.getHeight() / 10;
-		this.dividerWidth = this.getWidth() / 10;
-		
-		//Points
 		this.points = points;
-		
-		//Button
-		this.draw = new JButton("draw");
-		this.add(draw);
-		this.draw.addActionListener(e -> drawPoints());
-	
 	}
 	
+	public void setUI(UI ui) {
+		this.ui = ui;
+	}
+	
+	public void reset(){
+		regression.reset();
+		drawPoints();
+	}
+	public void step() {
+		regression.step();
+		drawPoints();
+	}
+	
+	public void play() {
+		regression.setUI(ui);
+		regression.setGraph(this);
+		Thread t = new Thread(regression);
+		t.start();
+	}
+	
+	public SingleVariableLinearRegression getRegression() {
+		return this.regression;
+	}
 	
 	public void drawLine(Graphics g, Line l) {
-		g.drawLine( (int) l.getX1(), (int) l.getX2(), (int) l.getY1(), (int) l.getY2());
+		float slope = l.getSlope();
+		float intercept = l.getIntercept();
+		int x1 = 0;
+		int x2 = this.getWidth();
+		int y1 = (int) intercept;
+		int y2 = (int) (intercept + x2 * slope);
+		g.drawLine(x1, this.getHeight() - y1, x2, this.getHeight() - y2);
+	
 	}	
 	
 	
-	private void drawPoints() {
+	public void drawPoints() {
+		super.paintComponent(getGraphics());
+		
 		for(Point point : points) {
 			drawPoint(getGraphics(), point);
 		}
+		drawLine(getGraphics(), regression.getLine());
 	}
 	
 	private void drawPoint(Graphics g, Point p) {
-		g.fillOval((int) p.getX(), this.getHeight() - (int)  p.getY(), 6, 6);
-		g.drawOval((int)  p.getX(), this.getHeight() - (int)  p.getY(), 6, 6);
+		g.fillOval((int) p.getX() - 3, this.getHeight() - (int)  p.getY() - 3, 6, 6);
+		g.drawOval((int)  p.getX() - 3, this.getHeight() - (int)  p.getY() - 3, 6, 6);
 	}
 	
 	public JPanel getPanel() {
-		return this.panel;
+		return this;
 	}
 }

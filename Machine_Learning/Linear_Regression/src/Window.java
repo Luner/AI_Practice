@@ -4,13 +4,13 @@ import java.util.ArrayList;
 public class Window {
 
 	private JFrame window;
-	
 	public Window() {
 		initWindow();
 	}
 	
-	public Window(Graph graph) {
+	public Window(JPanel graph, Graph g) {
 		initWindow();
+		g.drawPoints();
 		window.add(graph);
 	}
 	
@@ -25,13 +25,25 @@ public class Window {
 	public static void main (String[] args) {
 		
 		ArrayList<Point> points = new ArrayList<Point>();
-		points.add(new Point(10, 20));
-		points.add(new Point(100, 180));
-		points.add(new Point(120, 180));
-		points.add(new Point(80, 200));
-		points.add(new Point(500, 40));
+		points.add(new Point(20, 20));
+		points.add(new Point(30, 30));
+		points.add(new Point(40, 40));
+		points.add(new Point(50, 50));
+		points.add(new Point(60, 60));
+		points.add(new Point(70, 70));
 				
-		Graph g = new Graph("X","Y", points);
-		new Window(g);
+		Graph g = new Graph(points);
+		UI ui = new UI(g);
+		g.setUI(ui);
+		
+		JPanel container = new JPanel();
+		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+
+		container.add(g);
+		container.add(new UI(g));
+		
+		new Window(container, g);
+
+		
 	}
 }

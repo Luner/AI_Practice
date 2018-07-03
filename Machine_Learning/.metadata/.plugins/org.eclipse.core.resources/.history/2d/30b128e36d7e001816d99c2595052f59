@@ -1,0 +1,45 @@
+import javax.swing.*;
+import java.util.ArrayList;
+
+public class Window {
+
+	private JFrame window;
+	
+	public Window() {
+		initWindow();
+	}
+	
+	public Window(Graph graph) {
+		initWindow();
+		window.add(graph);
+	}
+	
+	private void initWindow() {
+
+		window = new JFrame("Linear Regression Example");
+		window.setVisible(true);
+		window.setSize(800, 600);
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	public static void main (String[] args) {
+		
+		ArrayList<Point> points = new ArrayList<Point>();
+		points.add(new Point(10, 20));
+		points.add(new Point(100, 180));
+		points.add(new Point(120, 180));
+		points.add(new Point(80, 200));
+		points.add(new Point(500, 40));
+				
+		Graph g = new Graph("X","Y", points);
+		
+		JPanel container = new JPanel();
+		container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
+
+		JPanel panel1 = g;
+		JPanel panel2 = new JPanel();
+		container.add(panel1);
+		container.add(panel2);
+		new Window(container);
+	}
+}

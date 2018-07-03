@@ -1,0 +1,81 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+
+public class Graph extends JPanel{
+
+	
+
+	private SingleVariableLinearRegression regression;
+	
+	private ArrayList<Point> points;
+	
+	public Graph(ArrayList<Point> points) {
+		regression = new SingleVariableLinearRegression(points);
+		
+		this.setBackground(Color.LIGHT_GRAY);
+		this.setPreferredSize(new Dimension(800, 500));
+		
+	
+		this.points = points;
+	}
+	
+	public void reset(){
+		regression.reset();
+		drawPoints();
+	}
+	public void step() {
+		regression.step();
+		drawPoints();
+	}
+	
+	public void play() {
+		int counter = 0;
+		while (!regression.getDone() && counter < 5000) {
+			step();
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if(counter % 20 == 0) {
+				ui.updateTheta(regression.getTheta0(), regression.getTheta0());
+			}
+		}
+	}
+	
+	public SingleVariableLinearRegression getRegression() {
+		return this.regression;
+	}
+	
+	public void drawLine(Graphics g, Line l) {
+		float slope = l.getSlope();
+		float intercept = l.getIntercept();
+		int x1 = 0;
+		int x2 = this.getWidth();
+		int y1 = (int) intercept;
+		int y2 = (int) (intercept + x2 * slope);
+		System.out.println();
+		g.drawLine(x1, this.getHeight() - y1, x2, this.getHeight() - y2);
+	
+	}	
+	
+	
+	public void drawPoints() {
+		super.paintComponent(getGraphics());
+		
+		for(Point point : points) {
+			drawPoint(getGraphics(), point);
+		}
+		drawLine(getGraphics(), regression.getLine());
+	}
+	
+	private void drawPoint(Graphics g, Point p) {
+		g.fillOval((int) p.getX() - 3, this.getHeight() - (int)  p.getY() - 3, 6, 6);
+		g.drawOval((int)  p.getX() - 3, this.getHeight() - (int)  p.getY() - 3, 6, 6);
+	}
+	
+	public JPanel getPanel() {
+		return this;
+	}
+}

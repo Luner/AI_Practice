@@ -1,0 +1,21 @@
+
+public class Line {
+
+	private float m;
+	private float b;
+
+	public Line (float m, float b) {
+		this.m = m;
+		this.b = b;
+	}
+	
+	public float getM() {
+		return this.m;
+	}
+	
+	public float getB() {
+		return this.b;
+	}
+	
+	
+}

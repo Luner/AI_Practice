@@ -1,0 +1,31 @@
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class UI extends JPanel{
+	private JLabel xAxisLabel;
+	private JLabel yAxisLabel;
+	private JLabel theta0Label;
+	private JLabel theta1Label;
+
+
+	private JButton draw;
+	private JButton step;
+	private Graph graph;
+
+	public UI() {
+		//Axis Labels
+		this.xAxisLabel = new JLabel("X");
+		this.yAxisLabel = new JLabel("X");
+		this.theta0Label = new JLabel("Theta 0: " + regression.getTheta0());
+		this.theta1Label = new JLabel("Theta 1: " + regression.getTheta1());
+
+		this.add(this.xAxisLabel);
+		this.add(this.yAxisLabel);
+		this.add(theta0Label);
+		this.add(theta1Label);
+
+		this.dividerHeight = this.getHeight() / 10;
+		this.dividerWidth = this.getWidth() / 10;
+	}
+}

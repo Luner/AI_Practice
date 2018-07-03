@@ -1,0 +1,81 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+
+public class Graph extends JPanel{
+
+	private JPanel panel;
+
+	private JLabel xAxisLabel;
+	private JLabel yAxisLabel;
+	private JLabel theta0Label;
+	private JLabel theta1Label;
+
+	private JButton draw;
+	private JButton step;
+	
+	private int dividerWidth;
+	private int dividerHeight;
+	private SingleVariableLinearRegression regression;
+	
+	private ArrayList<Point> points;
+	
+	public Graph(String xAxisLabel, String yAxisLabel, ArrayList<Point> points) {
+		regression = new SingleVariableLinearRegression(points);
+		
+		this.setBackground(Color.LIGHT_GRAY);
+		
+		//Axis Labels
+		this.xAxisLabel = new JLabel(xAxisLabel);
+		this.yAxisLabel = new JLabel(yAxisLabel);
+		this.theta0Label = new JLabel("Theta 0: " + regression.getTheta0());
+		this.theta1Label = new JLabel("Theta 1: " + regression.getTheta1());
+		
+		this.add(this.xAxisLabel);
+		this.add(this.yAxisLabel);
+		this.add(theta0Label);
+		this.add(theta1Label);
+	
+		this.dividerHeight = this.getHeight() / 10;
+		this.dividerWidth = this.getWidth() / 10;
+		
+		//Points
+		this.points = points;
+		
+		//Button
+		this.draw = new JButton("draw");
+		this.add(draw);
+		this.draw.addActionListener(e -> drawPoints());
+	
+	}
+	
+	
+	public void drawLine(Graphics g, Line l) {
+		float slope = l.getSlope();
+		float intercept = l.getIntercept();
+		int x1 = 0;
+		int x2 = this.getWidth();
+		int y1 = (int) intercept;
+		int y2 = (int) (intercept + x2 * slope);
+		System.out.println(x1 + " " + x2 + " " + y1 + " " + y2);
+		g.drawLine( (int) x1,5 +  y1, x2 - x1, y2 - y1);
+	
+	}	
+	
+	
+	private void drawPoints() {
+		for(Point point : points) {
+			drawPoint(getGraphics(), point);
+		}
+	}
+	
+	private void drawPoint(Graphics g, Point p) {
+		g.fillOval((int) p.getX(), this.getHeight() - (int)  p.getY(), 6, 6);
+		g.drawOval((int)  p.getX(), this.getHeight() - (int)  p.getY(), 6, 6);
+		drawLine(g, regression.getLine());
+	}
+	
+	public JPanel getPanel() {
+		return this.panel;
+	}
+}

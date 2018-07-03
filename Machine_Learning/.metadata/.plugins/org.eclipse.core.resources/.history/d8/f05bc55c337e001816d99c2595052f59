@@ -1,0 +1,21 @@
+
+public class Line {
+
+	private float slope;
+	private float b;
+
+	public Line (float slope, float b) {
+		this.slope = slope;
+		this.b = b;
+	}
+	
+	public float getM() {
+		return this.slope;
+	}
+	
+	public float getB() {
+		return this.b;
+	}
+	
+	
+}

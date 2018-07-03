@@ -1,0 +1,76 @@
+import java.awt.Color;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class UI extends JPanel {
+	private JLabel theta0Label;
+	private JLabel theta1Label;
+
+
+	private JButton draw;
+	private JButton step;
+	private JButton play;
+	private JButton reset;
+	
+	private float theta0;
+	private float theta1;
+	
+	public void setTheta0(float theta0) {
+		this.theta0 = theta0;
+	}
+
+	public void setTheta1(float theta1) {
+		this.theta1 = theta1;
+	}
+	
+	public UI(Graph graph) {
+		this.setSize(800, 100);
+		
+		this.setBackground(Color.LIGHT_GRAY);
+		
+		//Axis Labels
+		this.theta0Label = new JLabel("Theta0: 0.00");
+		this.theta1Label = new JLabel("Theta1: 0.00");
+
+		this.add(theta0Label);
+		this.add(theta1Label);
+		
+		//Button
+		this.draw = new JButton("draw");
+		this.add(draw);
+		this.draw.addActionListener(e -> graph.drawPoints());
+		
+		//Button
+		this.play = new JButton("play");
+		this.add(play);
+		this.play.addActionListener(e -> graph.play());
+		
+
+		this.step = new JButton("step");
+		this.add(step);
+		this.step.addActionListener(e -> graph.step());
+		
+		this.reset = new JButton("reset");
+		this.add(reset);
+		this.reset.addActionListener(e -> updateTheta());
+		
+		Timer SimpleTimer = new Timer(1000, new ActionListener(){
+		    @Override
+		    public void actionPerformed(ActionEvent e) {
+		        jLabel1.setText(SimpleDay.format(new Date()));
+		        jLabel2.setText(SimpleDate.format(new Date()));
+		        jLabel3.setText(SimpleTime.format(new Date()));
+		    }
+		});
+		SimpleTimer.start();
+	}
+	
+	public void updateTheta() {
+		System.out.println("shit");
+		theta0Label.setText("hahaha");
+		this.add(theta1Label);
+	}
+
+}

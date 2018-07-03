@@ -1,0 +1,122 @@
+import java.util.ArrayList;
+
+public class SingleVariableLinearRegression {
+	
+	private ArrayList<Point> data;
+	private ArrayList<Float> inputs;
+	private ArrayList<Float> outputs;
+	
+	private float theta0;
+	private float theta1;
+	private float tempTheta0;
+	private float tempTheta1;
+	
+	private float alpha = (float) 0.0005;
+	
+	public SingleVariableLinearRegression(ArrayList<Point> data) {
+		
+		this.data = data;
+		
+		inputs = new ArrayList<Float>();
+		outputs = new ArrayList<Float>();
+		
+		for(Point point : data) {
+			inputs.add(point.getX());
+			outputs.add(point.getY());
+		}
+		theta0 = 0;
+		theta1 = 0;
+	}
+	
+	public float getTheta0() {
+		return theta0;
+	}
+	
+	public float getTheta1() {
+		return theta1;
+	}
+
+	public Line getLine() {
+		return new Line(theta1, theta0);
+	}
+	
+	public void step() {
+		gradientDissent();
+		System.out.println("Theta0: " + theta0);
+		System.out.println("Theta1: " + theta1);
+		System.out.println("tempTheta0: " + tempTheta0);
+		System.out.println("tempTheta1: " + tempTheta1);
+		System.out.println("tempCost: " + tempCost());
+		System.out.println("cost: " + cost());
+		if(tempCost() < cost()) {
+			theta0 = tempTheta0;
+			theta1 = tempTheta1;
+		}
+	}
+
+	private float hypothesis(float input) {
+		return theta0 + (theta1 * input);
+	}
+	
+	
+	private float cost() {
+		int m = data.size();
+		
+		float cost = 0;
+	
+		for(Point point : data) {
+			cost += (hypothesis(point.getX()) - point.getY()) * (hypothesis(point.getX()) - point.getY());
+		}
+		
+		cost *= (0.5 / m);
+		
+		return cost;
+	
+	}
+	
+	private float tempHypothesis(float input) {
+		return tempTheta0 + tempTheta1 * input;
+	}
+	
+	private float tempCost() {
+		float m = data.size();
+		
+		float cost = 0;
+	
+		for(Point point : data) {
+			cost += ((tempHypothesis(point.getX()) - point.getY()) * (tempHypothesis(point.getX()) - point.getY()));
+		}
+		
+		cost *= (0.5 / m);
+		
+		return cost;
+	}
+	
+	private void gradientDissent() {
+		float m = data.size();
+		
+		float derivativeTheta0 = 0;
+		
+		for(Point point : data) {
+			derivativeTheta0 += (hypothesis(point.getX()) - point.getY());
+			System.out.println("haha " + derivativeTheta0);
+		}
+		System.out.println("haha 22" + derivativeTheta0);
+		derivativeTheta0 *= 1/m;
+			
+		float derivativeTheta1 = 0;
+		
+		for(Point point : data) {
+			derivativeTheta1 += (hypothesis(point.getX()) - point.getY()) * point.getX();
+			System.out.println("hypothesis: " + derivativeTheta1);
+		}
+		System.out.println("hypothesis222: " + derivativeTheta1);
+		derivativeTheta0 *= 1/m;
+
+		System.out.println("derivativeTheta0: " + derivativeTheta0);
+		System.out.println("derivativeTheta1: " + derivativeTheta1);
+		
+		tempTheta0 = theta0 - (alpha * derivativeTheta0);
+		tempTheta1 = theta1 - (alpha * derivativeTheta1);
+	}
+}

@@ -1,0 +1,99 @@
+import java.util.ArrayList;
+
+public class SingleVariableLinearRegression {
+	
+	private ArrayList<Point> data;
+	private ArrayList<Float> inputs;
+	private ArrayList<Float> outputs;
+	
+	private float theta0;
+	private float theta1;
+	private float tempTheta0;
+	private float tempTheta1;
+	
+	private float alpha = (float) 0.5;
+	
+	public SingleVariableLinearRegression(ArrayList<Point> data) {
+		
+		this.data = data;
+		
+		inputs = new ArrayList<Float>();
+		outputs = new ArrayList<Float>();
+		
+		for(Point point : data) {
+			inputs.add(point.getX());
+			outputs.add(point.getY());
+		}
+		theta0 = 0;
+		theta1 = 1;
+	}
+	
+	public step () {
+		if()
+		theta0 = tempTheta0;
+		theta1 = tempTheta1;
+	}
+	
+	public Line getLine() {
+		return new Line(theta1, theta0);
+	}
+
+	private float hypothesis(float input) {
+		return theta0 + theta1 * input;
+	}
+	
+	
+	private float cost() {
+		int m = data.size();
+		
+		float cost = 0;
+	
+		for(Point point : data) {
+			cost += (hypothesis(point.getX()) - point.getY()) * (hypothesis(point.getX()) - point.getY());
+		}
+		
+		cost *= (0.5 / m);
+		
+		return cost;
+	
+	}
+	
+	private float tempHypothesis(float input) {
+		return tempTheta0 + tempTheta1 * input;
+	}
+	
+	private float tempCost() {
+		int m = data.size();
+		
+		float cost = 0;
+	
+		for(Point point : data) {
+			cost += (hypothesis(point.getX()) - point.getY()) * (hypothesis(point.getX()) - point.getY());
+		}
+		
+		cost *= (0.5 / m);
+		
+		return cost;
+	}
+	
+	private void gradientDissent() {
+		int m = data.size();
+		
+		float derivativeTheta0 = 0;
+		
+		for(Point point : data) {
+			derivativeTheta0 += (hypothesis(point.getX()) - point.getY());
+		}
+		derivativeTheta0 *= 1/m;
+			
+		float derivativeTheta1 = 0;
+		
+		for(Point point : data) {
+			derivativeTheta1 += (hypothesis(point.getX() - point.getY())) * point.getX();
+		}
+		derivativeTheta0 *= 1/m;
+		
+		tempTheta0 = theta0 - alpha * derivativeTheta0;
+		tempTheta1 = theta1 - alpha * derivativeTheta1;
+	}
+}
